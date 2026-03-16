@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Dark Art of Poetic Verse</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #10080e;
+      --bg3: #080c14;
+      --gold: #c8b89a;
+      --gold-light: #e8d4b0;
+      --gold-mid: #c8a07a;
+      --red: #c84060;
+      --text-dim: #8a7060;
+      --text-muted: #6a5040;
+      --text-very-muted: #5a4838;
+      --nav-muted: #6b5060;
+      --border: rgba(200,160,100,0.12);
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--bg) 0%, var(--bg2) 50%, var(--bg3) 100%);
+      font-family: 'EB Garamond', Garamond, Georgia, serif;
+      color: var(--gold);
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::-webkit-scrollbar { width: 6px; background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #3a2030; border-radius: 3px; }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 48px 24px 32px;
+      border-bottom: 1px solid rgba(200,160,100,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(200,64,96,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: #6b5060;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.4rem, 4vw, 2.6rem);
+      color: var(--gold-light);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    h1 span { color: var(--red); }
+    .header-quote {
+      font-style: italic;
+      color: #7a6050;
+      font-size: 1rem;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      flex: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      width: 200px;
+      min-width: 160px;
+      border-right: 1px solid rgba(200,160,100,0.1);
+      padding: 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow-y: auto;
+      background: rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px 14px;
+      text-align: left;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: #6b5060;
+      transition: all 0.3s ease;
+      border-left: 2px solid transparent;
+      line-height: 1.4;
+      width: 100%;
+    }
+    .nav-btn:hover { color: #c8a07a; border-left-color: #6b3040; }
+    .nav-btn.active { color: #e8c99a; border-left-color: var(--red); background: rgba(200,64,96,0.07); }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px clamp(20px, 4vw, 60px);
+    }
+    .content-wrap { max-width: 720px; }
+
+    /* Section header */
+    .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: #6b4050;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .section-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+      color: #e8c99a;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .section-rule {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--red), transparent);
+      margin-top: 12px;
+      margin-bottom: 32px;
+    }
+
+    /* Content blocks */
+    .content-block { margin-bottom: 28px; }
+    .block-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--gold-mid);
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .block-body {
+      line-height: 1.9;
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      white-space: pre-line;
+    }
+    .block-body em { color: var(--gold); font-style: italic; display: block; }
+
+    /* Bordered block */
+    .bordered-block {
+      border-left: 1px solid rgba(200,64,96,0.2);
+      padding-left: 20px;
+      margin-bottom: 28px;
+    }
+
+    /* Kenning bullet */
+    .kenning-line {
+      display: block;
+      padding-left: 8px;
+      color: #a89070;
+      margin-bottom: 2px;
+    }
+
+    /* Steps */
+    .steps-list { display: flex; flex-direction: column; gap: 24px; }
+    .step-item { display: flex; gap: 20px; align-items: flex-start; }
+    .step-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.4rem;
+      color: var(--red);
+      opacity: 0.7;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .step-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .step-desc { line-height: 1.85; font-size: 1rem; color: var(--text-dim); }
+
+    /* Grammar table */
+    .grammar-table {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      width: 100%;
+    }
+    .grammar-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.5fr;
+      padding: 10px 16px;
+      background: rgba(200,64,96,0.1);
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+    .grammar-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.5fr;
+      padding: 11px 16px;
+      gap: 8px;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.03);
+    }
+    .grammar-row:nth-child(even) { background: rgba(255,255,255,0.02); }
+    .grammar-old { color: #6a5848; font-size: 0.95rem; }
+    .grammar-new { color: #e8c99a; font-size: 1rem; font-style: italic; }
+    .grammar-note { color: #5a4838; font-size: 0.85rem; }
+
+    /* Word cards */
+    .words-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .word-card {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 16px;
+      transition: all 0.3s;
+      cursor: default;
+    }
+    .word-card:hover {
+      background: rgba(200,64,96,0.07);
+      border-color: rgba(200,64,96,0.3);
+      transform: translateY(-1px);
+    }
+    .word-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      color: #e8c99a;
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+    .word-def { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; font-style: italic; }
+
+    /* Poem */
+    .poem-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(200,160,100,0.15);
+      border-radius: 6px;
+      padding: 32px 36px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .poem-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
+    }
+    .poem-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1rem;
+      color: var(--red);
+      margin-bottom: 24px;
+      text-align: center;
+      letter-spacing: 0.06em;
+    }
+    .poem-line { font-style: italic; font-size: 1.05rem; line-height: 2; color: #e0cdb0; }
+    .poem-gap { height: 1rem; }
+
+    /* Annotations */
+    .annotations-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: #6b4050;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .annotations-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .annotation-item { display: flex; gap: 10px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+    .annotation-bullet { color: var(--red); flex-shrink: 0; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 16px;
+      border-top: 1px solid rgba(200,160,100,0.08);
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: #3a2828;
+    }
+
+    /* Fade */
+    .fade-in { animation: fadeIn 0.45s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav { width: 130px; min-width: 110px; }
+      .nav-btn { font-size: 0.6rem; padding: 8px 10px; }
+      main { padding: 24px 16px; }
+      .grammar-header, .grammar-row { grid-template-columns: 1fr 1fr; }
+      .grammar-note { display: none; }
+      .poem-box { padding: 20px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <p class="header-eyebrow">✦ A TREATISE ON THE CRAFT ✦</p>
+  <h1>The Dark Art of<br><span>Poetic Verse</span></h1>
+  <p class="header-quote">"For beauty is nothing but the beginning of terror." — Rilke</p>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- NAV -->
+  <nav id="sidebar">
+    <button class="nav-btn active" data-section="foundations">I. The Foundations</button>
+    <button class="nav-btn" data-section="step1">II. Step the First</button>
+    <button class="nav-btn" data-section="step2">III. Step the Second</button>
+    <button class="nav-btn" data-section="step3">IV. Step the Third</button>
+    <button class="nav-btn" data-section="step4">V. Step the Fourth</button>
+    <button class="nav-btn" data-section="unusual">VI. The Lexicon</button>
+    <button class="nav-btn" data-section="example">VII. The Masterwork</button>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <div class="content-wrap" id="content"></div>
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>✦ VERSE IS THE WOUND MADE BEAUTIFUL ✦</footer>
+
+<script>
+  const sections = {
+    foundations: {
+      eyebrow: "I. The Foundations",
+      title: "Wherefore Art Thou, Verse?",
+      render() {
+        return `
+          <div class="content-block">
+            <p class="block-heading">What is Old &amp; British English Poetry?</p>
+            <p class="block-body">Old English (Anglo-Saxon) poetry thrives on alliteration, kennings, and a caesura — a dramatic pause splitting the line. Think Beowulf's thunderous rhythm. British Romantic &amp; Victorian poetry favours elevated diction, ornate imagery, and emotional weight — Byron, Keats, Tennyson, Poe's transatlantic shadow.
+
+To write in this tradition is to choose every word as a sculptor chooses stone — for weight, for texture, for the sound it makes when it strikes the ear.</p>
+          </div>
+        `;
+      }
+    },
+
+    step1: {
+      eyebrow: "II. Step the First",
+      title: "Choose Thy Mood &amp; Meter",
+      render() {
+        const steps = [
+          { label: "Pick your emotional core", desc: "Grief? Yearning? Dread? Ecstasy? All great poems orbit one gravitational feeling. Name it before you write a single word." },
+          { label: "Choose your meter", desc: "Iambic Pentameter (da-DUM × 5) is the heartbeat of British verse. Trochaic Tetrameter feels darker, more incantatory. Free verse with alliteration echoes Old English." },
+          { label: "Set the scene", desc: "Gothic poetry lives in moors, crumbling towers, moonlit crypts, storm-drowned shores. Romantic poetry blooms in gardens at dusk, by rivers, beneath dying stars." },
+        ];
+        return `<div class="steps-list">${steps.map((s, i) => `
+          <div class="step-item">
+            <div class="step-num">0${i+1}</div>
+            <div>
+              <p class="step-label">${s.label}</p>
+              <p class="step-desc">${s.desc}</p>
+            </div>
+          </div>`).join('')}</div>`;
+      }
+    },
+
+    step2: {
+      eyebrow: "III. Step the Second",
+      title: "The Architecture of a Stanza",
+      render() {
+        const blocks = [
+          {
+            heading: "Quatrain (ABAB) — The Classic",
+            body: `Four lines, alternating rhyme. The workhorse of British verse.<br><br>
+<em>"The night hath swallowed every last pale star,<br>
+And cold thy breath upon the hollow moor;<br>
+I walk, a wraith, from where I know not far,<br>
+To find a silence heavier than before."</em>`
+          },
+          {
+            heading: "Couplet — The Closing Blow",
+            body: `Two rhyming lines that seal a thought like a coffin lid.<br><br>
+<em>"Thus doth the grave receive what love hath made,<br>
+And all my glory falleth into shade."</em>`
+          },
+          {
+            heading: "Terza Rima (ABA BCB) — The Winding",
+            body: "Interlocking rhyme. Creates a relentless, spiralling momentum — ideal for dark, descending narratives."
+          }
+        ];
+        return blocks.map(b => `
+          <div class="bordered-block">
+            <p class="block-heading">${b.heading}</p>
+            <p class="block-body">${b.body}</p>
+          </div>`).join('');
+      }
+    },
+
+    step3: {
+      eyebrow: "IV. Step the Third",
+      title: "Archaic Grammar &amp; Thy Diction",
+      render() {
+        const rows = [
+          ["You / Your", "Thou / Thy / Thine", "singular, intimate or condescending"],
+          ["You (plural)", "Ye / Your", "plural address"],
+          ["Are", "Art", '"thou art" = you are'],
+          ["Is / Has", "Hath / Doth", "third person singular"],
+          ["Know", "Knowest / Dost know", "second person verb form"],
+          ["Will not", "Shall not / Wilt not", "archaic negation"],
+          ["Did see", "Didst behold", "past tense, elevated"],
+        ];
+        return `
+          <div class="grammar-table">
+            <div class="grammar-header">
+              <span>Modern English</span>
+              <span>Archaic Form</span>
+              <span>Note</span>
+            </div>
+            ${rows.map(r => `
+            <div class="grammar-row">
+              <span class="grammar-old">${r[0]}</span>
+              <span class="grammar-new">${r[1]}</span>
+              <span class="grammar-note">${r[2]}</span>
+            </div>`).join('')}
+          </div>`;
+      }
+    },
+
+    step4: {
+      eyebrow: "V. Step the Fourth",
+      title: "Kennings &amp; Dark Imagery",
+      render() {
+        return `
+          <div class="content-block">
+            <p class="block-heading">What is a Kenning?</p>
+            <p class="block-body">An Old English compound metaphor that replaces a noun with a poetic description. Instead of "sea" — write <strong style="color:#e8c99a">whale-road</strong>. Instead of "sword" — write <strong style="color:#e8c99a">wound-serpent</strong>. Instead of "tears" — write <strong style="color:#e8c99a">grief-water</strong>.</p>
+          </div>
+          <div class="content-block">
+            <p class="block-heading">Craft your own:</p>
+            <p class="block-body">
+              <span class="kenning-line">• Death → <em style="font-style:normal;color:#e8c99a">"the bone-harvest"</em> / <em style="font-style:normal;color:#e8c99a">"the dreamless dark"</em></span>
+              <span class="kenning-line">• Heart → <em style="font-style:normal;color:#e8c99a">"the blood-chamber"</em> / <em style="font-style:normal;color:#e8c99a">"the ache-keeper"</em></span>
+              <span class="kenning-line">• Night → <em style="font-style:normal;color:#e8c99a">"shadow-weave"</em> / <em style="font-style:normal;color:#e8c99a">"the star-less vault"</em></span>
+              <span class="kenning-line">• Eyes → <em style="font-style:normal;color:#e8c99a">"soul-windows"</em> / <em style="font-style:normal;color:#e8c99a">"the seeing-grief"</em></span>
+              <span class="kenning-line">• Moon → <em style="font-style:normal;color:#e8c99a">"the pale wanderer"</em> / <em style="font-style:normal;color:#e8c99a">"dusk-lantern"</em></span>
+              <span class="kenning-line">• Voice → <em style="font-style:normal;color:#e8c99a">"breath-song"</em> / <em style="font-style:normal;color:#e8c99a">"the tongue's lament"</em></span>
+            </p>
+          </div>`;
+      }
+    },
+
+    unusual: {
+      eyebrow: "VI. The Lexicon",
+      title: "Unusual Words of Terrible Beauty",
+      render() {
+        const words = [
+          { word: "Tenebrous", def: "dark, shadowy, obscure — heavier than 'dark'" },
+          { word: "Susurrus", def: "a soft murmuring sound; a whisper of wind or voices" },
+          { word: "Eldritch", def: "strange, eerie, supernatural in a deeply unsettling way" },
+          { word: "Sepulchral", def: "relating to tombs; gloomy, as of the grave" },
+          { word: "Sanguine", def: "blood-red; also, optimistic — a beautiful duality" },
+          { word: "Penumbra", def: "the partial shadow at the edge of darkness" },
+          { word: "Lugubrious", def: "mournful, dismal, excessively gloomy" },
+          { word: "Phantasmal", def: "ghost-like, spectral, belonging to the world of visions" },
+          { word: "Ineffable", def: "too great or extreme to be expressed in words" },
+          { word: "Wuthering", def: "blowing with a roaring sound — from the moors, Brontë's gift" },
+          { word: "Ossuary", def: "a place where bones are kept; a charnel house" },
+          { word: "Crepuscular", def: "of or resembling twilight; dim, indistinct" },
+          { word: "Labyrinthine", def: "intricate, twisted — of thought or architecture" },
+          { word: "Vespertine", def: "of, relating to, or appearing in the evening" },
+          { word: "Ululation", def: "a long, wavering, high-pitched wail; a keening cry" },
+        ];
+        return `<div class="words-grid">${words.map(w => `
+          <div class="word-card">
+            <p class="word-title">${w.word}</p>
+            <p class="word-def">${w.def}</p>
+          </div>`).join('')}</div>`;
+      }
+    },
+
+    example: {
+      eyebrow: "VII. The Masterwork",
+      title: "A Full Example Poem",
+      render() {
+        const lines = [
+          "Where tenebrous waters gnaw the bone-white cliff,",
+          "And vespertine shadows drape the hollow moor,",
+          "I stand — a wraith — beneath the penumbral rift,",
+          "And cry thy name, as I have cried before.",
+          "",
+          "Thou art the wound-serpent beneath my ribs,",
+          "The grief-water that runneth down my face;",
+          "The whale-road of my sorrow never cribs",
+          "Its dark, but deepens, widening into space.",
+          "",
+          "Eldritch and still, the dusk-lantern doth rise,",
+          "Casting its pale and lugubrious light",
+          "Upon the ossuary of our goodbyes —",
+          "The phantasmal wreckage of our one bright night.",
+          "",
+          "Ineffable, this ache — no tongue may tell",
+          "How deep the dreamless dark in which I dwell.",
+        ];
+        const notes = [
+          "Iambic Pentameter maintained throughout",
+          "ABAB rhyme scheme in each quatrain, closing couplet",
+          "Kennings used: bone-white cliff, wound-serpent, grief-water, whale-road, dusk-lantern, dreamless dark, ossuary of our goodbyes",
+          "Unusual vocab woven in: tenebrous, vespertine, penumbral, eldritch, lugubrious, ossuary, phantasmal, ineffable",
+          "Archaic grammar: thou art, doth rise, runneth",
+        ];
+        return `
+          <div class="poem-box">
+            <p class="poem-title">Upon the Wuthering Shore</p>
+            ${lines.map(l => l === "" ? '<div class="poem-gap"></div>' : `<p class="poem-line">${l}</p>`).join('')}
+          </div>
+          <p class="annotations-title">✦ Annotations</p>
+          <ul class="annotations-list">
+            ${notes.map(n => `<li class="annotation-item"><span class="annotation-bullet">◆</span><span>${n}</span></li>`).join('')}
+          </ul>`;
+      }
+    }
+  };
+
+  const content = document.getElementById('content');
+  const buttons = document.querySelectorAll('.nav-btn');
+
+  function renderSection(id) {
+    const s = sections[id];
+    content.innerHTML = `
+      <p class="section-eyebrow">${s.eyebrow}</p>
+      <h2 class="section-title">${s.title}</h2>
+      <div class="section-rule"></div>
+      ${s.render()}
+    `;
+    content.classList.remove('fade-in');
+    void content.offsetWidth;
+    content.classList.add('fade-in');
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderSection(btn.dataset.section);
+    });
+  });
+
+  renderSection('foundations');
+</script>
+</body>
+</html>
