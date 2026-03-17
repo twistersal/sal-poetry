@@ -361,12 +361,78 @@
       eyebrow: "I. The Foundations",
       title: "Wherefore Art Thou, Verse?",
       render() {
+        const poets = [
+          { name:"Anonymous", work:"Beowulf (c. 700–1000)", note:"The Old English epic. Study its alliteration and kenning system above all else." },
+          { name:"John Donne", work:"Holy Sonnets (1609)", note:"Master of the conceit — he makes abstract grief physical and philosophical." },
+          { name:"John Keats", work:"Ode to a Nightingale (1819)", note:"The purest romantic voice: beauty, transience, and the longing to escape time." },
+          { name:"Lord Byron", work:"So We'll Go No More (1817)", note:"Dark, elegant, self-aware. His lyric poems are short, lethal, and unforgettable." },
+          { name:"Alfred Tennyson", work:"In Memoriam A.H.H. (1850)", note:"A 133-canto elegy. The greatest sustained meditation on grief in English." },
+          { name:"Christina Rossetti", work:"Remember (1862)", note:"Gothic Romantic at her finest — love, death, and selfless despair in 14 lines." },
+        ];
+        const tests = [
+          { num:"01", label:"Sound", desc:'The word must be beautiful — or deliberately ugly — when spoken aloud. "Tenebrous" is heavier and more satisfying than "dark." "Susurrus" sounds like the thing it names. Read every line aloud before committing to it.' },
+          { num:"02", label:"Weight", desc:'Abstract nouns weigh less than concrete ones. "Sadness" is lighter than "the weight of an unread letter." Anchor your abstractions in physical objects and sensations. Grief in great poetry is not an emotion — it is a tide, a wound, a stone.' },
+          { num:"03", label:"Resonance", desc:'The word must carry history and connotation beyond its literal meaning. "Sepulchral" means tomb-like, yes — but it also pulls in the smell of cold stone, the silence of burial chambers, the finality of sealed doors. Choose words that are haunted.' },
+        ];
+        const depths = [
+          { label:"It names what people feel but cannot say.", desc:"The best dark poems give language to grief, dread, or longing that the reader has always carried but never articulated. When a reader says 'this is exactly it' — that is the poem's deepest power." },
+          { label:"It earns its darkness through beauty, not shock.", desc:"Gratuitous bleakness is easy. The difficulty — and the art — is making something terrible also radiant. Keats called this 'negative capability': remaining in uncertainty and darkness without irritably reaching for resolution." },
+          { label:"It holds a contradiction at its centre.", desc:"The greatest dark poems hold two opposing truths at once: love and death, beauty and decay, presence and absence. The tension between them is the poem's energy. A poem that resolves too neatly has not gone deep enough." },
+        ];
         return `
           <div class="content-block">
-            <p class="block-heading">What is Old &amp; British English Poetry?</p>
-            <p class="block-body">Old English (Anglo-Saxon) poetry thrives on alliteration, kennings, and a caesura — a dramatic pause splitting the line. Think Beowulf's thunderous rhythm. British Romantic &amp; Victorian poetry favours elevated diction, ornate imagery, and emotional weight — Byron, Keats, Tennyson, Poe's transatlantic shadow.
-
-To write in this tradition is to choose every word as a sculptor chooses stone — for weight, for texture, for the sound it makes when it strikes the ear.</p>
+            <p class="block-heading">§ 1 — A Brief History of the Tradition</p>
+            <p class="block-body" style="margin-bottom:18px;">Poetry in English is not one tradition — it is a river fed by centuries of wildly different streams. To write in the Old and British mode is to draw from at least three distinct eras, each with its own music and obsession:</p>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div style="border-left:2px solid #c84060;padding-left:16px;">
+                <p style="font-family:'Cinzel',serif;font-size:0.72rem;color:#c8a07a;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Old English / Anglo-Saxon (450 – 1100 AD)</p>
+                <p style="line-height:1.85;font-size:1rem;color:#8a7060;">The oldest surviving English poems — <em>Beowulf</em>, <em>The Wanderer</em>, <em>The Seafarer</em> — were composed to be spoken aloud by a <em>scop</em> (bard) in a mead-hall. They contain no rhyme. Instead they rely on <strong style="color:#c8b89a">alliteration</strong> (each line's two halves share a repeated consonant sound), <strong style="color:#c8b89a">kennings</strong> (compound metaphors replacing nouns), and a <strong style="color:#c8b89a">caesura</strong> — a deliberate breath-pause splitting every line in two. The emotional register is stoic, elemental, and vast: exile, fate, the indifferent sea, the fragility of human glory against time.</p>
+              </div>
+              <div style="border-left:2px solid #7a6090;padding-left:16px;">
+                <p style="font-family:'Cinzel',serif;font-size:0.72rem;color:#c8a07a;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Renaissance &amp; Early Modern (1500 – 1700)</p>
+                <p style="line-height:1.85;font-size:1rem;color:#8a7060;">Shakespeare, Marlowe, Spenser, and Donne brought Italian forms — the sonnet, the ode — into English and elevated them. Iambic pentameter became the gold standard of measured speech. Metaphysical poets like Donne used startling, intellectually violent comparisons called <em>conceits</em>: grief as a compass, love as a sphere, the soul as a coin. The language grew ornate, dense, and philosophical. This is where "thee," "thou," and elaborate syntactical inversions take root as poetic convention.</p>
+              </div>
+              <div style="border-left:2px solid #406090;padding-left:16px;">
+                <p style="font-family:'Cinzel',serif;font-size:0.72rem;color:#c8a07a;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Romantic &amp; Gothic Victorian (1780 – 1900)</p>
+                <p style="line-height:1.85;font-size:1rem;color:#8a7060;">Byron, Keats, Shelley, Tennyson, and Christina Rossetti elevated feeling above reason. Death, beauty, decay, and passionate longing became the great subjects. Gothic Romanticism — darkened by Poe, Brontë, and Swinburne — blended beauty with horror, love with annihilation. This is the era of the moor at midnight, the dying beloved, the narrator who cannot stop grieving. Their language is lush, musical, and heavy with nostalgia for things already lost before the poem begins.</p>
+              </div>
+            </div>
+          </div>
+          <div class="content-block" style="margin-top:32px;">
+            <p class="block-heading">§ 2 — The Poets You Must Know</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:4px;">
+              ${poets.map(p => `
+                <div class="word-card">
+                  <p style="font-family:'Cinzel',serif;font-size:0.8rem;color:#e8c99a;margin-bottom:3px;">${p.name}</p>
+                  <p style="font-size:0.78rem;color:#c84060;font-style:italic;margin-bottom:7px;">${p.work}</p>
+                  <p style="font-size:0.85rem;color:#6a5040;line-height:1.55;">${p.note}</p>
+                </div>`).join('')}
+            </div>
+          </div>
+          <div class="content-block" style="margin-top:32px;">
+            <p class="block-heading">§ 3 — The Philosophy of the Word</p>
+            <p class="block-body" style="margin-bottom:16px;">In everyday speech we reach for the nearest word. In this tradition, we refuse it. Every word must earn its place by satisfying three tests simultaneously:</p>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              ${tests.map(t => `
+                <div style="display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,0.02);border:1px solid rgba(200,160,100,0.08);border-radius:4px;padding:14px 16px;">
+                  <span style="font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:#c84060;opacity:0.6;flex-shrink:0;line-height:1;">${t.num}</span>
+                  <div>
+                    <p style="font-family:'Cinzel',serif;font-size:0.75rem;color:#e8c99a;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">${t.label}</p>
+                    <p style="line-height:1.85;font-size:0.97rem;color:#8a7060;">${t.desc}</p>
+                  </div>
+                </div>`).join('')}
+            </div>
+          </div>
+          <div class="content-block" style="margin-top:32px;">
+            <p class="block-heading">§ 4 — What Makes a Poem Dark &amp; Deep?</p>
+            <p class="block-body" style="margin-bottom:16px;">Darkness in poetry is not pessimism. It is the willingness to look at what is real without flinching — and then render it so precisely and beautifully that the reader feels a strange gratitude for having been shown it. A poem achieves darkness and depth when it does all three of the following:</p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              ${depths.map(t => `
+                <div style="padding:14px 16px;border-left:2px solid rgba(200,64,96,0.25);">
+                  <p style="font-family:'Cinzel',serif;font-size:0.75rem;color:#c8b89a;letter-spacing:0.06em;margin-bottom:5px;"><span style="color:#c84060;margin-right:8px;">◆</span>${t.label}</p>
+                  <p style="line-height:1.85;font-size:0.97rem;color:#7a6050;padding-left:20px;">${t.desc}</p>
+                </div>`).join('')}
+            </div>
           </div>
         `;
       }
@@ -376,19 +442,125 @@ To write in this tradition is to choose every word as a sculptor chooses stone �
       eyebrow: "II. Step the First",
       title: "Choose Thy Mood &amp; Meter",
       render() {
-        const steps = [
-          { label: "Pick your emotional core", desc: "Grief? Yearning? Dread? Ecstasy? All great poems orbit one gravitational feeling. Name it before you write a single word." },
-          { label: "Choose your meter", desc: "Iambic Pentameter (da-DUM × 5) is the heartbeat of British verse. Trochaic Tetrameter feels darker, more incantatory. Free verse with alliteration echoes Old English." },
-          { label: "Set the scene", desc: "Gothic poetry lives in moors, crumbling towers, moonlit crypts, storm-drowned shores. Romantic poetry blooms in gardens at dusk, by rivers, beneath dying stars." },
+        const emotions = [
+          { name:"Grief", color:"#7a90b0", desc:"The most fertile ground in British poetry. Grief is patient — it does not rush. Use long vowels (moon, wound, tomb), slow sibilants, and images of stillness: frozen water, sealed rooms, unanswered letters.", example:'"And silence, like a poultice, comes / To heal the blows of sound." — O. W. Holmes' },
+          { name:"Yearning / Longing", color:"#c8a060", desc:"The ache for something irretrievably distant — a person, a time, a version of the self. Use imagery of thresholds: windows, doorways, shores, horizon lines. The subject is always almost-visible, always just out of reach.", example:'"Deep in the shady sadness of a vale / Far sunken from the healthy breath of morn." — Keats' },
+          { name:"Dread / Gothic Horror", color:"#c84060", desc:"Not jump-scare horror but the slow, creeping horror of wrongness. Use short staccato rhythms, unsettling juxtapositions of beauty and decay, and the uncanny. The reader should feel the world is not quite right before they understand why.", example:'"Once upon a midnight dreary, while I pondered, weak and weary." — Poe' },
+          { name:"Dark Romantic Love", color:"#a06080", desc:"Love in this tradition is always laced with doom. The beloved is dangerous, ephemeral, or already lost. Use fire-and-ice contrasts (burning / cold), images of consuming and being consumed, the body as both temple and tomb.", example:'"She walks in beauty, like the night / Of cloudless climes and starry skies." — Byron' },
+          { name:"Melancholy / Wistfulness", color:"#608090", desc:"Softer than grief, more diffuse than dread. A beautiful sadness — the feeling at the end of a summer evening, looking at old photographs. Use crepuscular settings (dusk, autumn), muted colours, and dying light.", example:'"Season of mists and mellow fruitfulness… / Where are the songs of Spring? Ay, where are they?" — Keats' },
+          { name:"Defiance / Dark Triumph", color:"#90a060", desc:"The refusal to submit — to fate, to God, to death. The most elevated register of all. Use imperatives and declarations, strong stressed syllables, and imagery of fire, iron, and storm.", example:'"Do not go gentle into that good night. / Rage, rage against the dying of the light." — Dylan Thomas' },
         ];
-        return `<div class="steps-list">${steps.map((s, i) => `
-          <div class="step-item">
-            <div class="step-num">0${i+1}</div>
-            <div>
-              <p class="step-label">${s.label}</p>
-              <p class="step-desc">${s.desc}</p>
+        const meters = [
+          {
+            name:"Iambic Pentameter",
+            pattern:"da-DUM da-DUM da-DUM da-DUM da-DUM",
+            syllables:"10 syllables per line",
+            feel:"Measured, noble, conversational yet elevated. The natural rhythm of reflective English speech.",
+            color:"#c8a060",
+            example:"Shall I com-PARE thee TO a SUM-mer's DAY?",
+            used:"Shakespeare's sonnets, Keats' odes, Milton's Paradise Lost, Tennyson's elegies."
+          },
+          {
+            name:"Trochaic Tetrameter",
+            pattern:"DUM-da DUM-da DUM-da DUM-da",
+            syllables:"8 syllables per line",
+            feel:"Driving, incantatory, slightly hypnotic. Falls forward, like a chant or a spell. Excellent for dark, ritual content.",
+            color:"#c84060",
+            example:"BY the SHORES of GIT-che GU-mee",
+            used:"Poe's The Raven (mixed), Longfellow's Hiawatha, folk incantations."
+          },
+          {
+            name:"Dactylic Hexameter",
+            pattern:"DUM-da-da DUM-da-da DUM-da-da ...",
+            syllables:"~17 syllables per line",
+            feel:"Epic, surging, oceanic. The meter of Homer and Virgil adapted into English. Creates a sweeping, grand, almost overwhelming effect.",
+            color:"#7a90b0",
+            example:"THIS is the FOR-est pri-ME-val, the MUR-muring PINES and the HEM-locks",
+            used:"Longfellow's Evangeline, classical translations."
+          },
+          {
+            name:"Old English Alliterative Verse",
+            pattern:"[stressed] [stressed] || [stressed] [stressed]",
+            syllables:"No fixed count — stress-based, not syllable-based",
+            feel:"Elemental, thunderous, ancient. The caesura (||) is a physical pause — a held breath. All Old English poetry uses this structure instead of rhyme.",
+            color:"#90a060",
+            example:'"Hwæt! We Gār-Dena || in geār-dagum" (Beowulf, line 1)',
+            used:"Beowulf, The Wanderer, The Seafarer. Also modern imitations by Tolkien and Seamus Heaney."
+          },
+        ];
+        const scenes = {
+          gothic: ["A moor under a moonless sky", "A crumbling manor with lights in only one window", "A crypt that has been opened from the inside", "Fog rolling in from a black sea", "A mirror that shows something not in the room", "A garden where nothing living grows", "A corridor that is longer inside than it should be"],
+          romantic: ["A lake at dusk, the surface perfectly still", "A ruined abbey half-reclaimed by vines", "A clifftop at the edge of a storm", "The last light on a winter afternoon", "A letter that was never sent, found years later", "A garden in autumn where something bloomed once", "Two shadows on a wall where only one person stands"]
+        };
+        return `
+          <div class="content-block">
+            <p class="block-heading">§ 1 — The Emotional Core: Choose One Feeling</p>
+            <p class="block-body" style="margin-bottom:18px;">Before meter, before imagery, before a single word — you need a feeling. Not a topic, not a story: a <em>feeling</em>. The poem is a machine for delivering that feeling with maximum precision into the reader's body. Name it, then refuse to leave it. Every image, every word choice, every rhythm should serve that one emotional gravity.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+              ${emotions.map(e => `
+                <div class="word-card" style="border-left:3px solid ${e.color}40;">
+                  <p style="font-family:'Cinzel',serif;font-size:0.82rem;color:${e.color};margin-bottom:8px;letter-spacing:0.06em;">${e.name}</p>
+                  <p style="font-size:0.88rem;color:#8a7060;line-height:1.65;margin-bottom:10px;">${e.desc}</p>
+                  <p style="font-size:0.8rem;color:#5a4838;font-style:italic;line-height:1.5;border-top:1px solid rgba(200,160,100,0.1);padding-top:8px;">${e.example}</p>
+                </div>`).join('')}
             </div>
-          </div>`).join('')}</div>`;
+          </div>
+
+          <div class="content-block" style="margin-top:36px;">
+            <p class="block-heading">§ 2 — Meter: The Heartbeat of the Line</p>
+            <p class="block-body" style="margin-bottom:18px;">Meter is the pattern of stressed and unstressed syllables in a line. Think of it as the pulse beneath the words — steady, insistent, and capable of being broken for great effect. English poetry uses two main metrical traditions: the <strong style="color:#c8b89a">syllabic/accentual-syllabic</strong> (counting both syllables and stresses) and the <strong style="color:#c8b89a">purely accentual</strong> (Old English — counting only stresses). Here are the four meters you need:</p>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              ${meters.map(m => `
+                <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(200,160,100,0.1);border-top:2px solid ${m.color}60;border-radius:4px;padding:18px 20px;">
+                  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+                    <p style="font-family:'Cinzel',serif;font-size:0.82rem;color:#e8c99a;letter-spacing:0.08em;text-transform:uppercase;">${m.name}</p>
+                    <span style="font-family:monospace;font-size:0.75rem;color:${m.color};background:rgba(0,0,0,0.3);padding:3px 8px;border-radius:2px;">${m.syllables}</span>
+                  </div>
+                  <p style="font-family:monospace;font-size:0.8rem;color:${m.color};margin-bottom:10px;letter-spacing:0.05em;">${m.pattern}</p>
+                  <p style="font-size:0.92rem;color:#8a7060;line-height:1.75;margin-bottom:10px;">${m.feel}</p>
+                  <div style="background:rgba(0,0,0,0.3);border-radius:3px;padding:10px 14px;margin-bottom:10px;">
+                    <p style="font-family:monospace;font-size:0.82rem;color:#c8b89a;font-style:italic;">${m.example}</p>
+                  </div>
+                  <p style="font-size:0.82rem;color:#5a4838;line-height:1.6;"><span style="color:#6b4050;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;margin-right:6px;">Used in:</span>${m.used}</p>
+                </div>`).join('')}
+            </div>
+            <div style="margin-top:16px;background:rgba(200,64,96,0.06);border:1px solid rgba(200,64,96,0.15);border-radius:4px;padding:14px 18px;">
+              <p style="font-family:'Cinzel',serif;font-size:0.7rem;color:#c84060;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">◆ On Breaking the Meter</p>
+              <p style="font-size:0.92rem;color:#8a7060;line-height:1.8;">A perfect meter, held too rigidly, becomes monotonous. The art is to <em>mostly</em> keep the pattern — so the reader's body expects it — and then break it deliberately at the most emotionally charged moment. A sudden stress where none was expected hits like a blow. A missing syllable opens like a silence. The rule exists so that the violation can mean something.</p>
+            </div>
+          </div>
+
+          <div class="content-block" style="margin-top:36px;">
+            <p class="block-heading">§ 3 — The Caesura: The Art of the Pause</p>
+            <p class="block-body" style="margin-bottom:14px;">Inherited directly from Old English verse, the caesura (||) is a pause — a breath — that splits a line in two. In print it is often marked by a dash, a comma, a full stop mid-line, or simply by the natural weight of the words. Used well, it creates dramatic contrast between the line's two halves, mirrors the fracture of a feeling, or gives the reader a moment to absorb a blow before the line continues.</p>
+            <div style="background:rgba(0,0,0,0.25);border-radius:4px;padding:16px 20px;display:flex;flex-direction:column;gap:12px;">
+              ${[
+                { line:'"To be, || or not to be — || that is the question."', note:"Two caesurae: the first splits the existential choice, the second separates action from judgement." },
+                { line:'"I have wasted my life. || Let me waste it some more."', note:"The pause after the confession makes the second half hit harder — resignation becomes darkly funny." },
+                { line:'"The sea is calm tonight. || The tide is full."', note:"From Arnold\'s Dover Beach. The pause creates a false sense of peace before the poem darkens." },
+              ].map(c => `
+                <div style="border-left:1px solid rgba(200,64,96,0.3);padding-left:14px;">
+                  <p style="font-style:italic;color:#e0cdb0;font-size:1rem;line-height:2;margin-bottom:4px;">${c.line}</p>
+                  <p style="font-size:0.85rem;color:#5a4838;line-height:1.6;">${c.note}</p>
+                </div>`).join('')}
+            </div>
+          </div>
+
+          <div class="content-block" style="margin-top:36px;">
+            <p class="block-heading">§ 4 — Setting the Scene: Gothic vs Romantic</p>
+            <p class="block-body" style="margin-bottom:16px;">The physical world in this tradition is never neutral — it is an extension of the poem's emotional state. Choose your landscape before you write. Here are proven scene-seeds for each mode:</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div style="background:rgba(200,64,96,0.05);border:1px solid rgba(200,64,96,0.15);border-radius:4px;padding:16px;">
+                <p style="font-family:'Cinzel',serif;font-size:0.72rem;color:#c84060;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;">Gothic / Dark</p>
+                ${scenes.gothic.map(s => `<p style="font-size:0.88rem;color:#7a6050;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.03);line-height:1.5;">◆ ${s}</p>`).join('')}
+              </div>
+              <div style="background:rgba(100,120,200,0.05);border:1px solid rgba(100,120,200,0.15);border-radius:4px;padding:16px;">
+                <p style="font-family:'Cinzel',serif;font-size:0.72rem;color:#8090c8;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;">Romantic / Elegiac</p>
+                ${scenes.romantic.map(s => `<p style="font-size:0.88rem;color:#7a6050;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.03);line-height:1.5;">◆ ${s}</p>`).join('')}
+              </div>
+            </div>
+          </div>
+        `;
       }
     },
 
@@ -412,8 +584,19 @@ To find a silence heavier than before."</em>`
 And all my glory falleth into shade."</em>`
           },
           {
-            heading: "Terza Rima (ABA BCB) — The Winding",
-            body: "Interlocking rhyme. Creates a relentless, spiralling momentum — ideal for dark, descending narratives."
+            heading: "Terza Rima (ABA BCB CDC) — The Winding",
+            body: `Interlocking rhyme where the middle line of each tercet rhymes with the first and third of the next. Creates a relentless, spiralling momentum — like descending a dark staircase that never ends. Dante used this in the Inferno.<br><br>
+<strong style="color:#c8a07a;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.1em;">Rhyme Map:</strong><br>
+<em style="color:#7a9070;display:block;margin:8px 0 12px 8px;">Line 1 → A &nbsp;|&nbsp; Line 2 → B &nbsp;|&nbsp; Line 3 → A<br>Line 4 → B &nbsp;|&nbsp; Line 5 → C &nbsp;|&nbsp; Line 6 → B<br>Line 7 → C &nbsp;|&nbsp; Line 8 → D &nbsp;|&nbsp; Line 9 → C ...</em>
+<em>"I tread the hollow stair where dead things <strong>keep</strong>,<br>
+And every stone doth whisper of the <strong>grave</strong>,<br>
+Where silence falleth cold and buried <strong>deep</strong>.<br><br>
+No candle lights the corridor's black <strong>cave</strong>,<br>
+Only the bones of those who dared <strong>remain</strong>,<br>
+Who once, like thee, wept beauty and were <strong>brave</strong>.<br><br>
+Now dust art thou — and I shall be the <strong>same</strong>,<br>
+Descending rung by rung into the <strong>night</strong>,<br>
+Until no tongue alive recalls my <strong>name</strong>."</em>`
           }
         ];
         return blocks.map(b => `
@@ -480,36 +663,142 @@ And all my glory falleth into shade."</em>`
     unusual: {
       eyebrow: "VI. The Lexicon",
       title: "Unusual Words of Terrible Beauty",
-      render() {
-        const words = [
-          { word: "Tenebrous", def: "dark, shadowy, obscure — heavier than 'dark'" },
-          { word: "Susurrus", def: "a soft murmuring sound; a whisper of wind or voices" },
-          { word: "Eldritch", def: "strange, eerie, supernatural in a deeply unsettling way" },
-          { word: "Sepulchral", def: "relating to tombs; gloomy, as of the grave" },
-          { word: "Sanguine", def: "blood-red; also, optimistic — a beautiful duality" },
-          { word: "Penumbra", def: "the partial shadow at the edge of darkness" },
-          { word: "Lugubrious", def: "mournful, dismal, excessively gloomy" },
-          { word: "Phantasmal", def: "ghost-like, spectral, belonging to the world of visions" },
-          { word: "Ineffable", def: "too great or extreme to be expressed in words" },
-          { word: "Wuthering", def: "blowing with a roaring sound — from the moors, Brontë's gift" },
-          { word: "Ossuary", def: "a place where bones are kept; a charnel house" },
-          { word: "Crepuscular", def: "of or resembling twilight; dim, indistinct" },
-          { word: "Labyrinthine", def: "intricate, twisted — of thought or architecture" },
-          { word: "Vespertine", def: "of, relating to, or appearing in the evening" },
-          { word: "Ululation", def: "a long, wavering, high-pitched wail; a keening cry" },
-        ];
-        return `<div class="words-grid">${words.map(w => `
-          <div class="word-card">
-            <p class="word-title">${w.word}</p>
+      builtIn: [
+        { word: "Tenebrous", def: "dark, shadowy, obscure — heavier than 'dark'" },
+        { word: "Susurrus", def: "a soft murmuring sound; a whisper of wind or voices" },
+        { word: "Eldritch", def: "strange, eerie, supernatural in a deeply unsettling way" },
+        { word: "Sepulchral", def: "relating to tombs; gloomy, as of the grave" },
+        { word: "Sanguine", def: "blood-red; also, optimistic — a beautiful duality" },
+        { word: "Penumbra", def: "the partial shadow at the edge of darkness" },
+        { word: "Lugubrious", def: "mournful, dismal, excessively gloomy" },
+        { word: "Phantasmal", def: "ghost-like, spectral, belonging to the world of visions" },
+        { word: "Ineffable", def: "too great or extreme to be expressed in words" },
+        { word: "Wuthering", def: "blowing with a roaring sound — from the moors, Brontë's gift" },
+        { word: "Ossuary", def: "a place where bones are kept; a charnel house" },
+        { word: "Crepuscular", def: "of or resembling twilight; dim, indistinct" },
+        { word: "Labyrinthine", def: "intricate, twisted — of thought or architecture" },
+        { word: "Vespertine", def: "of, relating to, or appearing in the evening" },
+        { word: "Ululation", def: "a long, wavering, high-pitched wail; a keening cry" },
+      ],
+      getCustom() {
+        try { return JSON.parse(localStorage.getItem('grimoire_words') || '[]'); } catch(e) { return []; }
+      },
+      saveCustom(arr) {
+        localStorage.setItem('grimoire_words', JSON.stringify(arr));
+      },
+      renderCustomCards(arr) {
+        if (!arr.length) return `<p style="font-size:0.85rem;color:#4a3828;font-style:italic;padding:12px 0;">No words added yet — add thy first above.</p>`;
+        return arr.map((w, i) => `
+          <div class="word-card" style="border-color:rgba(200,64,96,0.25);position:relative;">
+            <button onclick="grimoire_deleteWord(${i})" style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;color:#4a3030;font-size:0.9rem;line-height:1;transition:color 0.2s;" onmouseover="this.style.color='#c84060'" onmouseout="this.style.color='#4a3030'">✕</button>
+            <p class="word-title" style="color:#e8b0b0;padding-right:20px;">${w.word}</p>
             <p class="word-def">${w.def}</p>
-          </div>`).join('')}</div>`;
+          </div>`).join('');
+      },
+      render() {
+        const custom = this.getCustom();
+        return `
+          <!-- ADD WORD FORM -->
+          <div style="background:rgba(200,64,96,0.06);border:1px solid rgba(200,64,96,0.2);border-radius:6px;padding:20px 22px;margin-bottom:28px;">
+            <p class="block-heading" style="margin-bottom:14px;">✦ Add Thine Own Words</p>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <div style="flex:1;min-width:140px;">
+                  <label style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.15em;color:#6b4050;text-transform:uppercase;display:block;margin-bottom:5px;">The Word</label>
+                  <input id="lex-word" type="text" placeholder="e.g. Pyrrhic" style="width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(200,160,100,0.2);border-radius:3px;padding:9px 12px;color:#e8c99a;font-family:'EB Garamond',serif;font-size:1rem;outline:none;" onfocus="this.style.borderColor='rgba(200,64,96,0.5)'" onblur="this.style.borderColor='rgba(200,160,100,0.2)'" />
+                </div>
+                <div style="flex:2.5;min-width:200px;">
+                  <label style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.15em;color:#6b4050;text-transform:uppercase;display:block;margin-bottom:5px;">The Definition</label>
+                  <input id="lex-def" type="text" placeholder="e.g. relating to a victory won at too great a cost" style="width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(200,160,100,0.2);border-radius:3px;padding:9px 12px;color:#e8c99a;font-family:'EB Garamond',serif;font-size:1rem;outline:none;" onfocus="this.style.borderColor='rgba(200,64,96,0.5)'" onblur="this.style.borderColor='rgba(200,160,100,0.2)'" />
+                </div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;">
+                <button id="lex-add-btn" style="background:rgba(200,64,96,0.15);border:1px solid rgba(200,64,96,0.4);color:#e8a0a8;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;padding:9px 20px;border-radius:3px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(200,64,96,0.28)'" onmouseout="this.style.background='rgba(200,64,96,0.15)'">
+                  ✦ Inscribe Word
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CUSTOM WORDS -->
+          <div style="margin-bottom:32px;">
+            <p style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.22em;color:#6b4050;text-transform:uppercase;margin-bottom:12px;">◆ Thy Personal Lexicon</p>
+            <div id="custom-words-grid" class="words-grid">${this.renderCustomCards(custom)}</div>
+          </div>
+
+          <!-- DIVIDER -->
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+            <div style="flex:1;height:1px;background:rgba(200,160,100,0.1);"></div>
+            <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#4a3828;text-transform:uppercase;white-space:nowrap;">The Established Grimoire</p>
+            <div style="flex:1;height:1px;background:rgba(200,160,100,0.1);"></div>
+          </div>
+
+          <!-- BUILT-IN WORDS -->
+          <div class="words-grid">${this.builtIn.map(w => `
+            <div class="word-card">
+              <p class="word-title">${w.word}</p>
+              <p class="word-def">${w.def}</p>
+            </div>`).join('')}
+          </div>`;
+      },
+      afterRender() {
+        const self = this;
+        // expose delete fn to global scope
+        window.grimoire_deleteWord = function(i) {
+          const arr = self.getCustom();
+          arr.splice(i, 1);
+          self.saveCustom(arr);
+          document.getElementById('custom-words-grid').innerHTML = self.renderCustomCards(arr);
+        };
+        document.getElementById('lex-add-btn').addEventListener('click', () => {
+          const wordEl = document.getElementById('lex-word');
+          const defEl  = document.getElementById('lex-def');
+          const word = wordEl.value.trim();
+          const def  = defEl.value.trim();
+          if (!word || !def) {
+            wordEl.style.borderColor = !word ? '#c84060' : 'rgba(200,160,100,0.2)';
+            defEl.style.borderColor  = !def  ? '#c84060' : 'rgba(200,160,100,0.2)';
+            return;
+          }
+          const arr = self.getCustom();
+          arr.unshift({ word, def });
+          self.saveCustom(arr);
+          wordEl.value = '';
+          defEl.value  = '';
+          wordEl.style.borderColor = 'rgba(200,160,100,0.2)';
+          defEl.style.borderColor  = 'rgba(200,160,100,0.2)';
+          document.getElementById('custom-words-grid').innerHTML = self.renderCustomCards(arr);
+        });
+        // allow Enter key on def field to submit
+        document.getElementById('lex-def').addEventListener('keydown', e => {
+          if (e.key === 'Enter') document.getElementById('lex-add-btn').click();
+        });
       }
     },
 
     example: {
       eyebrow: "VII. The Masterwork",
       title: "A Full Example Poem",
+      getPoems() {
+        try { return JSON.parse(localStorage.getItem('grimoire_poems') || '[]'); } catch(e) { return []; }
+      },
+      savePoems(arr) {
+        localStorage.setItem('grimoire_poems', JSON.stringify(arr));
+      },
+      renderSavedPoems(arr) {
+        if (!arr.length) return `<p style="font-size:0.88rem;color:#4a3828;font-style:italic;padding:14px 0;">No verses inscribed yet. Let the quill find thy hand.</p>`;
+        return arr.map((p, i) => `
+          <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(200,160,100,0.12);border-radius:5px;padding:24px 28px;margin-bottom:16px;position:relative;">
+            <div style="position:absolute;top:12px;right:14px;display:flex;gap:8px;">
+              <button onclick="grimoire_deletePoem(${i})" style="background:none;border:none;cursor:pointer;color:#4a3030;font-size:0.75rem;font-family:'Cinzel',serif;letter-spacing:0.08em;transition:color 0.2s;padding:2px 6px;" onmouseover="this.style.color='#c84060'" onmouseout="this.style.color='#4a3030'">✕ Delete</button>
+            </div>
+            <p style="font-family:'Cinzel',serif;font-size:0.85rem;color:#c84060;letter-spacing:0.06em;margin-bottom:16px;padding-right:60px;">${p.title || '— Untitled —'}</p>
+            <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,64,96,0.3),transparent);"></div>
+            ${p.body.split('\n').map(line => line.trim() === '' ? '<div style="height:0.7rem;"></div>' : `<p style="font-style:italic;color:#e0cdb0;font-size:1rem;line-height:1.95;">${line}</p>`).join('')}
+          </div>`).join('');
+      },
       render() {
+        const saved = this.getPoems();
         const lines = [
           "Where tenebrous waters gnaw the bone-white cliff,",
           "And vespertine shadows drape the hollow moor,",
@@ -532,19 +821,80 @@ And all my glory falleth into shade."</em>`
         const notes = [
           "Iambic Pentameter maintained throughout",
           "ABAB rhyme scheme in each quatrain, closing couplet",
-          "Kennings used: bone-white cliff, wound-serpent, grief-water, whale-road, dusk-lantern, dreamless dark, ossuary of our goodbyes",
-          "Unusual vocab woven in: tenebrous, vespertine, penumbral, eldritch, lugubrious, ossuary, phantasmal, ineffable",
+          "Kennings: bone-white cliff, wound-serpent, grief-water, whale-road, dusk-lantern, dreamless dark, ossuary of our goodbyes",
+          "Unusual vocab: tenebrous, vespertine, penumbral, eldritch, lugubrious, ossuary, phantasmal, ineffable",
           "Archaic grammar: thou art, doth rise, runneth",
         ];
         return `
+          <!-- EXAMPLE POEM -->
           <div class="poem-box">
             <p class="poem-title">Upon the Wuthering Shore</p>
             ${lines.map(l => l === "" ? '<div class="poem-gap"></div>' : `<p class="poem-line">${l}</p>`).join('')}
           </div>
           <p class="annotations-title">✦ Annotations</p>
-          <ul class="annotations-list">
+          <ul class="annotations-list" style="margin-bottom:40px;">
             ${notes.map(n => `<li class="annotation-item"><span class="annotation-bullet">◆</span><span>${n}</span></li>`).join('')}
-          </ul>`;
+          </ul>
+
+          <!-- DIVIDER -->
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+            <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(200,64,96,0.3));"></div>
+            <p style="font-family:'Cinzel Decorative',serif;font-size:0.65rem;letter-spacing:0.18em;color:#c84060;text-transform:uppercase;white-space:nowrap;">✦ Thy Verse ✦</p>
+            <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(200,64,96,0.3),transparent);"></div>
+          </div>
+
+          <!-- POEM WRITER -->
+          <div style="background:rgba(200,64,96,0.05);border:1px solid rgba(200,64,96,0.18);border-radius:6px;padding:22px 24px;margin-bottom:32px;">
+            <p class="block-heading" style="margin-bottom:16px;">✦ Inscribe Thy Own Verse</p>
+            <div style="margin-bottom:12px;">
+              <label style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.15em;color:#6b4050;text-transform:uppercase;display:block;margin-bottom:5px;">Title of the Poem</label>
+              <input id="poem-title" type="text" placeholder="e.g. Upon the Wuthering Shore" style="width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(200,160,100,0.2);border-radius:3px;padding:9px 12px;color:#e8c99a;font-family:'EB Garamond',serif;font-size:1rem;outline:none;" onfocus="this.style.borderColor='rgba(200,64,96,0.5)'" onblur="this.style.borderColor='rgba(200,160,100,0.2)'" />
+            </div>
+            <div style="margin-bottom:14px;">
+              <label style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.15em;color:#6b4050;text-transform:uppercase;display:block;margin-bottom:5px;">The Verse — press Enter for new lines, blank line for stanza break</label>
+              <textarea id="poem-body" rows="10" placeholder="Where tenebrous shadows fall upon the moor,&#10;And grief-water runneth cold and deep..." style="width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(200,160,100,0.2);border-radius:3px;padding:10px 12px;color:#e0cdb0;font-family:'EB Garamond',serif;font-size:1.05rem;font-style:italic;line-height:2;outline:none;resize:vertical;" onfocus="this.style.borderColor='rgba(200,64,96,0.5)'" onblur="this.style.borderColor='rgba(200,160,100,0.2)'"></textarea>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;">
+              <button id="poem-clear-btn" style="background:none;border:1px solid rgba(200,160,100,0.15);color:#5a4838;font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;padding:8px 16px;border-radius:3px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(200,160,100,0.35)';this.style.color='#8a7060'" onmouseout="this.style.borderColor='rgba(200,160,100,0.15)';this.style.color='#5a4838'">Clear</button>
+              <button id="poem-save-btn" style="background:rgba(200,64,96,0.15);border:1px solid rgba(200,64,96,0.4);color:#e8a0a8;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;padding:9px 22px;border-radius:3px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(200,64,96,0.28)'" onmouseout="this.style.background='rgba(200,64,96,0.15)'">✦ Seal the Verse</button>
+            </div>
+          </div>
+
+          <!-- SAVED POEMS -->
+          <p style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.22em;color:#6b4050;text-transform:uppercase;margin-bottom:14px;">◆ Thy Inscribed Works</p>
+          <div id="saved-poems-list">${this.renderSavedPoems(saved)}</div>
+        `;
+      },
+      afterRender() {
+        const self = this;
+        window.grimoire_deletePoem = function(i) {
+          const arr = self.getPoems();
+          arr.splice(i, 1);
+          self.savePoems(arr);
+          document.getElementById('saved-poems-list').innerHTML = self.renderSavedPoems(arr);
+        };
+        document.getElementById('poem-clear-btn').addEventListener('click', () => {
+          document.getElementById('poem-title').value = '';
+          document.getElementById('poem-body').value  = '';
+        });
+        document.getElementById('poem-save-btn').addEventListener('click', () => {
+          const titleEl = document.getElementById('poem-title');
+          const bodyEl  = document.getElementById('poem-body');
+          const body = bodyEl.value.trim();
+          if (!body) {
+            bodyEl.style.borderColor = '#c84060';
+            bodyEl.focus();
+            return;
+          }
+          const arr = self.getPoems();
+          arr.unshift({ title: titleEl.value.trim(), body, date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) });
+          self.savePoems(arr);
+          titleEl.value = '';
+          bodyEl.value  = '';
+          bodyEl.style.borderColor = 'rgba(200,160,100,0.2)';
+          document.getElementById('saved-poems-list').innerHTML = self.renderSavedPoems(arr);
+          document.getElementById('saved-poems-list').scrollIntoView({ behavior:'smooth', block:'start' });
+        });
       }
     }
   };
@@ -563,6 +913,7 @@ And all my glory falleth into shade."</em>`
     content.classList.remove('fade-in');
     void content.offsetWidth;
     content.classList.add('fade-in');
+    if (typeof s.afterRender === 'function') s.afterRender();
   }
 
   buttons.forEach(btn => {
