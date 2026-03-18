@@ -698,6 +698,40 @@ Until no tongue alive recalls my <strong>name</strong>."</em>`
       render() {
         const custom = this.getCustom();
         return `
+          <!-- IMAGE READER -->
+          <div style="background:rgba(80,50,100,0.08);border:1px solid rgba(150,100,200,0.2);border-radius:6px;padding:20px 22px;margin-bottom:20px;">
+            <p class="block-heading" style="margin-bottom:4px;">✦ Read an Image — Extract Its Words</p>
+            <p style="font-size:0.88rem;color:#6a5848;line-height:1.7;margin-bottom:14px;">Upload any image — a painting, a photograph, a scene. The grimoire will read its mood and extract poetic words that belong to it.</p>
+
+            <label id="img-drop-zone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1px dashed rgba(150,100,200,0.35);border-radius:5px;padding:22px;cursor:pointer;transition:all 0.25s;background:rgba(0,0,0,0.2);" onmouseover="this.style.borderColor='rgba(150,100,200,0.7)';this.style.background='rgba(80,50,100,0.12)'" onmouseout="this.style.borderColor='rgba(150,100,200,0.35)';this.style.background='rgba(0,0,0,0.2)'">
+              <span id="img-drop-icon" style="font-size:1.6rem;opacity:0.5;">🖼</span>
+              <span id="img-drop-label" style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.15em;color:#7a6090;text-transform:uppercase;">Click or drop image here</span>
+              <input id="img-upload" type="file" accept="image/*" style="display:none;" />
+            </label>
+
+            <div id="img-preview-wrap" style="display:none;margin-top:12px;text-align:center;">
+              <img id="img-preview" style="max-height:160px;max-width:100%;border-radius:4px;border:1px solid rgba(150,100,200,0.25);object-fit:cover;" />
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;margin-top:12px;">
+              <button id="img-read-btn" disabled style="background:rgba(120,80,180,0.15);border:1px solid rgba(150,100,200,0.3);color:#a890c8;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;padding:9px 20px;border-radius:3px;cursor:not-allowed;opacity:0.5;transition:all 0.2s;">
+                ✦ Reveal Its Words
+              </button>
+            </div>
+
+            <div id="img-status" style="display:none;margin-top:14px;">
+              <div id="img-status-inner" style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;color:#7a6090;text-align:center;padding:10px;"></div>
+            </div>
+
+            <div id="img-results" style="display:none;margin-top:16px;">
+              <p style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.18em;color:#7a5090;text-transform:uppercase;margin-bottom:10px;">◆ Words Drawn from the Image — select to add:</p>
+              <div id="img-word-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+              <div style="display:flex;justify-content:flex-end;margin-top:12px;">
+                <button id="img-add-all-btn" style="background:rgba(120,80,180,0.2);border:1px solid rgba(150,100,200,0.4);color:#c8a0e8;font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;padding:8px 18px;border-radius:3px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(120,80,180,0.35)'" onmouseout="this.style.background='rgba(120,80,180,0.2)'">Add All to Lexicon</button>
+              </div>
+            </div>
+          </div>
+
           <!-- ADD WORD FORM -->
           <div style="background:rgba(200,64,96,0.06);border:1px solid rgba(200,64,96,0.2);border-radius:6px;padding:20px 22px;margin-bottom:28px;">
             <p class="block-heading" style="margin-bottom:14px;">✦ Add Thine Own Words</p>
@@ -743,7 +777,120 @@ Until no tongue alive recalls my <strong>name</strong>."</em>`
       },
       afterRender() {
         const self = this;
-        // expose delete fn to global scope
+
+        // ── IMAGE READER ──────────────────────────────────────────
+        let imgBase64 = null;
+        let imgMime   = null;
+        let extractedWords = [];
+
+        const uploadInput  = document.getElementById('img-upload');
+        const dropZone     = document.getElementById('img-drop-zone');
+        const dropLabel    = document.getElementById('img-drop-label');
+        const dropIcon     = document.getElementById('img-drop-icon');
+        const previewWrap  = document.getElementById('img-preview-wrap');
+        const previewEl    = document.getElementById('img-preview');
+        const readBtn      = document.getElementById('img-read-btn');
+        const statusBox    = document.getElementById('img-status');
+        const statusInner  = document.getElementById('img-status-inner');
+        const resultsBox   = document.getElementById('img-results');
+        const wordListEl   = document.getElementById('img-word-list');
+        const addAllBtn    = document.getElementById('img-add-all-btn');
+
+        function loadFile(file) {
+          if (!file || !file.type.startsWith('image/')) return;
+          imgMime = file.type;
+          const reader = new FileReader();
+          reader.onload = e => {
+            imgBase64 = e.target.result.split(',')[1];
+            previewEl.src = e.target.result;
+            previewWrap.style.display = 'block';
+            dropLabel.textContent = file.name;
+            dropIcon.textContent = '✓';
+            readBtn.disabled = false;
+            readBtn.style.opacity = '1';
+            readBtn.style.cursor = 'pointer';
+            resultsBox.style.display = 'none';
+            statusBox.style.display = 'none';
+          };
+          reader.readAsDataURL(file);
+        }
+
+        dropZone.addEventListener('click', () => uploadInput.click());
+        uploadInput.addEventListener('change', e => loadFile(e.target.files[0]));
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor='rgba(150,100,200,0.8)'; });
+        dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor='rgba(150,100,200,0.35)'; });
+        dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.style.borderColor='rgba(150,100,200,0.35)'; loadFile(e.dataTransfer.files[0]); });
+
+        readBtn.addEventListener('click', async () => {
+          if (!imgBase64) return;
+          readBtn.disabled = true;
+          readBtn.textContent = '⧗ Reading...';
+          statusBox.style.display = 'block';
+          statusInner.textContent = 'The grimoire gazes upon thine image…';
+          resultsBox.style.display = 'none';
+
+          try {
+            const res = await fetch('https://api.anthropic.com/v1/messages', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 1000,
+                messages: [{
+                  role: 'user',
+                  content: [
+                    { type: 'image', source: { type: 'base64', media_type: imgMime, data: imgBase64 } },
+                    { type: 'text', text: `You are a poet and lexicographer with deep knowledge of Old English, Gothic, and Romantic British poetry. Study this image carefully — its mood, light, colours, textures, subject matter, and emotional atmosphere. Extract exactly 6 unusual, rare, or deeply evocative English words that belong to this image — words that capture its essence and would be useful in writing dark, romantic, or gothic poetry inspired by it. For each word, give a concise poetic definition (max 12 words). Respond ONLY with a JSON array, no markdown, no preamble. Format: [{"word":"...","def":"..."},...]` }
+                  ]
+                }]
+              })
+            });
+            const data = await res.json();
+            const raw = data.content.find(b => b.type === 'text')?.text || '[]';
+            const clean = raw.replace(/```json|```/g, '').trim();
+            extractedWords = JSON.parse(clean);
+
+            wordListEl.innerHTML = extractedWords.map((w, i) => `
+              <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.2);border:1px solid rgba(150,100,200,0.15);border-radius:4px;padding:10px 14px;">
+                <input type="checkbox" id="img-chk-${i}" checked style="accent-color:#9060c8;width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
+                <label for="img-chk-${i}" style="cursor:pointer;flex:1;">
+                  <span style="font-family:'Cinzel',serif;font-size:0.85rem;color:#c8a0e8;">${w.word}</span>
+                  <span style="color:#5a4858;font-size:0.82rem;font-style:italic;margin-left:8px;">${w.def}</span>
+                </label>
+              </div>`).join('');
+
+            statusBox.style.display = 'none';
+            resultsBox.style.display = 'block';
+          } catch(err) {
+            statusInner.textContent = 'The grimoire could not read the image. Try again.';
+            statusInner.style.color = '#c84060';
+          }
+          readBtn.disabled = false;
+          readBtn.textContent = '✦ Reveal Its Words';
+        });
+
+        addAllBtn.addEventListener('click', () => {
+          const arr = self.getCustom();
+          extractedWords.forEach((w, i) => {
+            const chk = document.getElementById(`img-chk-${i}`);
+            if (chk && chk.checked) arr.unshift({ word: w.word, def: w.def });
+          });
+          self.saveCustom(arr);
+          document.getElementById('custom-words-grid').innerHTML = self.renderCustomCards(arr);
+          resultsBox.style.display = 'none';
+          statusBox.style.display = 'block';
+          statusInner.style.color = '#90c890';
+          statusInner.textContent = '✓ Words inscribed into thy Personal Lexicon.';
+          imgBase64 = null;
+          previewWrap.style.display = 'none';
+          dropLabel.textContent = 'Click or drop image here';
+          dropIcon.textContent = '🖼';
+          readBtn.disabled = true;
+          readBtn.style.opacity = '0.5';
+          document.getElementById('custom-words-grid').scrollIntoView({ behavior:'smooth', block:'start' });
+        });
+
+        // ── MANUAL WORD ADD ──────────────────────────────────────
         window.grimoire_deleteWord = function(i) {
           const arr = self.getCustom();
           arr.splice(i, 1);
